@@ -1,13 +1,15 @@
 package vlad.pr.projectCRUD.service;
 
-import ch.qos.logback.classic.spi.IThrowableProxy;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import vlad.pr.projectCRUD.model.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import vlad.pr.projectCRUD.repository.UserRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @AllArgsConstructor
 @Service
@@ -20,13 +22,13 @@ public class UserService {
         return userRepository.findAll();
     }
 
+    public User getUserById(Integer id) {
+        return userRepository.findById(id).orElse(null);
+    }
+
     @Transactional
     public void createUser(User user) {
         userRepository.save(user);
-    }
-
-    public User getUserById(Integer id) {
-        return userRepository.findById(id).orElse(null);
     }
 
     @Transactional
