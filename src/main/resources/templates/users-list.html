@@ -32,6 +32,7 @@
 
         <td>
             <form th:action="@{/users/delete/{id}(id=${u.id})}" method="post">
+                <input type="hidden" name="_method" value="delete"/>
                 <button type="submit">Delete</button>
             </form>
         </td>
