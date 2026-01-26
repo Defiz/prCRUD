@@ -29,6 +29,7 @@ public class UserService {
 
     @Transactional
     public void createUser(User user) {
+        user.setRole("ROLE_USER");
         userRepository.save(user);
     }
 
@@ -43,6 +44,8 @@ public class UserService {
         userFromBase.setName(user.getName());
         userFromBase.setAge(user.getAge());
         userFromBase.setEmail(user.getEmail());
+        userFromBase.setPassword(user.getPassword());
+        userFromBase.setRole(user.getRole());
         userRepository.save(userFromBase);
     }
 }

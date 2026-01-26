@@ -9,7 +9,7 @@
 <h2>Users table</h2>
 
 <table border=1>
-    <a th:href="@{/users/add}">
+    <a th:href="@{/admin/add}">
         <button>Add New User</button>
     </a>
     <tr>
@@ -25,19 +25,21 @@
         <td th:text="${u.email}"></td>
 
         <td>
-            <a th:href="@{/users/edit/{id}(id=${u.id})}">
+            <a th:href="@{/admin/edit/{id}(id=${u.id})}">
                 <button>Edit</button>
             </a>
         </td>
 
         <td>
-            <form th:action="@{/users/delete/{id}(id=${u.id})}" method="post">
+            <form th:action="@{/admin/delete/{id}(id=${u.id})}" method="post">
                 <input type="hidden" name="_method" value="delete"/>
                 <button type="submit">Delete</button>
             </form>
         </td>
     </tr>
 </table>
+<p></p>
+<a href="/logout">Logout</a>
 
 </body>
 </html>
