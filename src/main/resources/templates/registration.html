@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration</title>
+</head>
+<body>
+<form th:method="POST" th:action="@{/registration}" th:object="${user}">
+    <label>Name:</label>
+    <input type="text" th:field="*{name}" required/><br/>
+    <div th:if="@{#fields.hashErrors('name')}" th:errors="*{name}"></div>
+
+    <label>Age:</label>
+    <input type="number" th:field="*{age}" required/><br/>
+    <div th:if="@{#fields.hashErrors('age')}" th:errors="*{age}"></div>
+
+    <label>Email:</label>
+    <input type="email" th:field="*{email}" required/><br/>
+    <div th:if="@{#fields.hashErrors('email')}" th:errors="*{email}"></div>
+
+    <label>Password</label>
+    <input type="password" th:field="*{password}" required/><br/>
+
+    <button type="submit">Sign up</button>
+</form>
+</body>
+</html>

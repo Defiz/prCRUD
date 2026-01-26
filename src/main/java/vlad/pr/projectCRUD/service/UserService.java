@@ -1,15 +1,12 @@
 package vlad.pr.projectCRUD.service;
 
 import lombok.AllArgsConstructor;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import vlad.pr.projectCRUD.model.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import vlad.pr.projectCRUD.repository.UserRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 @AllArgsConstructor
 @Service
@@ -24,6 +21,10 @@ public class UserService {
 
     public User getUserById(Integer id) {
         return userRepository.findById(id).orElse(null);
+    }
+
+    public boolean existsByName(String name) {
+        return userRepository.existsByName(name);
     }
 
     @Transactional
