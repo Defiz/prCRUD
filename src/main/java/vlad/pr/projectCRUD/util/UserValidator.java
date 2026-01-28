@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
+import vlad.pr.projectCRUD.dto.UserValidatorDto;
 import vlad.pr.projectCRUD.model.User;
 import vlad.pr.projectCRUD.service.UserService;
 
@@ -15,13 +16,13 @@ public class UserValidator implements Validator {
 
     @Override
     public boolean supports(Class<?> clazz) {
-        return User.class.equals(clazz);
+        return UserValidatorDto.class.equals(clazz);
     }
 
     @Override
     public void validate(Object target, Errors errors) {
-      User user = (User) target;
-      if (userService.existsByName(user.getName())) {
+        UserValidatorDto userDto = (UserValidatorDto) target;
+      if (userService.existsByName(userDto.getName())) {
           errors.rejectValue("name", "" , "Пользователь с таким именем уже существует");
       }
     }

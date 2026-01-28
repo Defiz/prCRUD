@@ -1,12 +1,17 @@
 package vlad.pr.projectCRUD.service;
 
 import lombok.AllArgsConstructor;
+import vlad.pr.projectCRUD.dto.UserValidatorDto;
+import vlad.pr.projectCRUD.dto.mapper.UserValidatorMapper;
+import vlad.pr.projectCRUD.model.Role;
 import vlad.pr.projectCRUD.model.User;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import vlad.pr.projectCRUD.repository.RoleRepository;
 import vlad.pr.projectCRUD.repository.UserRepository;
 
 import java.util.List;
+import java.util.Set;
 
 @AllArgsConstructor
 @Service
@@ -14,6 +19,8 @@ import java.util.List;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
+    private final UserValidatorMapper userValidatorMapper;
 
     public List<User> getAllUsers() {
         return userRepository.findAll();
@@ -27,9 +34,15 @@ public class UserService {
         return userRepository.existsByName(name);
     }
 
+    public Role getRoleByName(String role) {
+        return roleRepository.findByRole(role);
+    }
+
     @Transactional
-    public void createUser(User user) {
-        user.setRole("ROLE_USER");
+    public void createUser(UserValidatorDto userDto) {
+        User user = userValidatorMapper.toEntity(userDto);
+        Role userRole = roleRepository.findByRole("ROLE_USER");
+        user.setRoles(Set.of(userRole));
         userRepository.save(user);
     }
 
@@ -45,7 +58,7 @@ public class UserService {
         userFromBase.setAge(user.getAge());
         userFromBase.setEmail(user.getEmail());
         userFromBase.setPassword(user.getPassword());
-        userFromBase.setRole(user.getRole());
+        userFromBase.setRoles(user.getRoles());
         userRepository.save(userFromBase);
     }
 }

@@ -8,6 +8,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import vlad.pr.projectCRUD.dto.UserValidatorDto;
 import vlad.pr.projectCRUD.model.User;
 import vlad.pr.projectCRUD.service.RegistrationService;
 import vlad.pr.projectCRUD.util.UserValidator;
@@ -27,12 +28,12 @@ public class AuthController {
 
     @Transactional
     @PostMapping("/registration")
-    public String performRegistration(@ModelAttribute("user") @Valid User user, BindingResult bindingResult) {
-        userValidator.validate(user, bindingResult);
+    public String performRegistration(@ModelAttribute("user") @Valid UserValidatorDto userDto, BindingResult bindingResult) {
+        userValidator.validate(userDto, bindingResult);
         if (bindingResult.hasErrors()) {
             return "registration";
         }
-        registrationService.register(user);
+        registrationService.register(userDto);
         return "redirect:/login";
     }
 }

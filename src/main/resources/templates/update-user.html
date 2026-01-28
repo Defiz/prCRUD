@@ -14,30 +14,40 @@
 
     <label>Name:</label>
     <input type="text" th:field="*{name}" required/><br/>
-    <div th:if="@{#fields.hashErrors('name')}" th:errors="*{name}"></div>
+    <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
 
     <label>Age:</label>
     <input type="number" th:field="*{age}" required/><br/>
-    <div th:if="@{#fields.hashErrors('age')}" th:errors="*{age}"></div>
+    <div th:if="${#fields.hasErrors('age')}" th:errors="*{age}"></div>
 
     <label>Email:</label>
     <input type="email" th:field="*{email}" required/><br/>
-    <div th:if="@{#fields.hashErrors('email')}" th:errors="*{email}"></div>
+    <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
 
     <label>Password</label>
     <input type="password" th:field="*{password}" required/><br/>
 
-    <LABEL>Role</LABEL>
-    <select th:field="*{role}">
-        <option value="ROLE_USER" th:selected="*{role} == 'ROLE_USER'">User</option>
-        <option value="ROLE_ADMIN" th:selected="*{role} == 'ROLE_ADMIN'">Admin</option>
-    </select></br>
-    <button type="submit">Update</button>
-</form>
+    <label>Role</label>
 
-<br/>
-<a th:href="@{/admin}">Back to Users List</a>
-<p></p>
-<a href="/logout">Logout</a>
+    <label>
+        <input type="checkbox"
+               th:field="*{roles}"
+               th:value="ROLE_ADMIN"/> ADMIN
+    </label>
+
+    <label>
+        <input type="checkbox"
+               th:field="*{roles}"
+               th:value="ROLE_USER"/> USER
+
+    </label>
+    <p></p>
+    <button type="submit">Save changes</button>
+    <p></p>
+
+    <br/>
+    <a th:href="@{/admin}">Back to Users List</a>
+    <p></p>
+    <a href="/logout">Logout</a>
 </body>
 </html>
