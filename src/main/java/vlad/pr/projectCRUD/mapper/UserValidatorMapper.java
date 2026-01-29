@@ -1,4 +1,4 @@
-package vlad.pr.projectCRUD.dto.mapper;
+package vlad.pr.projectCRUD.mapper;
 
 import org.springframework.stereotype.Component;
 import vlad.pr.projectCRUD.dto.UserValidatorDto;

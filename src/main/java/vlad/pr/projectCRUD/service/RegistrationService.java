@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import vlad.pr.projectCRUD.dto.UserValidatorDto;
-import vlad.pr.projectCRUD.dto.mapper.UserValidatorMapper;
+import vlad.pr.projectCRUD.mapper.UserValidatorMapper;
 import vlad.pr.projectCRUD.model.Role;
 import vlad.pr.projectCRUD.model.User;
 import vlad.pr.projectCRUD.repository.RoleRepository;

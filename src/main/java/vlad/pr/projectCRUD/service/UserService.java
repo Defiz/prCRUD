@@ -2,7 +2,7 @@ package vlad.pr.projectCRUD.service;
 
 import lombok.AllArgsConstructor;
 import vlad.pr.projectCRUD.dto.UserValidatorDto;
-import vlad.pr.projectCRUD.dto.mapper.UserValidatorMapper;
+import vlad.pr.projectCRUD.mapper.UserValidatorMapper;
 import vlad.pr.projectCRUD.model.Role;
 import vlad.pr.projectCRUD.model.User;
 import org.springframework.stereotype.Service;
