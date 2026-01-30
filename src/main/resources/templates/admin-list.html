@@ -149,8 +149,8 @@
 <script>
     $(document).ready(function () {
 
-        let editUserModal = new bootstrap.Modal(document.getElementById('editUserModal'));
-        let addUserModal = new bootstrap.Modal(document.getElementById('addUserModal'));
+        const editUserModal = new bootstrap.Modal(document.getElementById('editUserModal'));
+        const addUserModal = new bootstrap.Modal(document.getElementById('addUserModal'));
 
         function loadUsers() {
             $.ajax({
@@ -158,31 +158,26 @@
                 type: 'GET',
                 dataType: 'json',
                 success: function(users) {
-                    let tbody = $('#usersTable tbody');
+                    const tbody = $('#usersTable tbody');
                     tbody.empty();
-                    users.forEach(function(u) {
-                        let row = `<tr>
+                    users.forEach(u => {
+                        tbody.append(`<tr>
                         <td>${u.id}</td>
                         <td>${u.name}</td>
                         <td>${u.age}</td>
                         <td>${u.email}</td>
-                        <td>
-                            <button class="btn btn-success btn-sm editBtn" data-id="${u.id}">Edit</button>
-                        </td>
-                        <td>
-                            <button class="btn btn-danger btn-sm deleteBtn" data-id="${u.id}">Delete</button>
-                        </td>
-                    </tr>`;
-                        tbody.append(row);
+                        <td><button class="btn btn-success btn-sm editBtn" data-id="${u.id}">Edit</button></td>
+                        <td><button class="btn btn-danger btn-sm deleteBtn" data-id="${u.id}">Delete</button></td>
+                    </tr>`);
                     });
-                },
+                }
             });
         }
 
         loadUsers();
 
-        $('#usersTable').on('click', '.editBtn', function () {
-            let userId = $(this).data('id');
+        $('#usersTable').on('click', '.editBtn', function() {
+            const userId = $(this).data('id');
             $.ajax({
                 url: `/api/admin/users/${userId}`,
                 type: 'GET',
@@ -199,25 +194,29 @@
                     if (user.roles.includes('ROLE_ADMIN')) $('#roleAdmin').prop('checked', true);
 
                     editUserModal.show();
-                },
-                error: function(err) { alert('Ошибка при загрузке пользователя'); }
+                }
             });
         });
 
         $('#editUserForm').submit(function(e) {
             e.preventDefault();
-            let id = $('#editUserId').val();
-            let roles = [];
-            $('.roleCheckbox:checked').each(function(){ roles.push($(this).val()); });
-            let password = $('#editUserPassword').val();
+            const id = $('#editUserId').val();
+            const roles = [];
+            $('.roleCheckbox:checked').each(function() { roles.push($(this).val()); });
+            const password = $('#editUserPassword').val().trim();
 
-            let userDto = {
+            const userDto = {
                 id: id,
                 name: $('#editUserName').val(),
                 age: parseInt($('#editUserAge').val()),
                 email: $('#editUserEmail').val(),
                 roles: roles
             };
+
+            // Добавляем пароль только если оно введено
+            if(password !== '') {
+                userDto.password = password;
+            }
 
             $.ajax({
                 url: `/api/admin/users/${id}`,
@@ -229,14 +228,14 @@
             });
         });
 
-        $('#addUserBtn').click(function(){ addUserModal.show(); });
+        $('#addUserBtn').click(() => addUserModal.show());
 
         $('#addUserForm').submit(function(e) {
             e.preventDefault();
-            let roles = [];
+            const roles = [];
             $('.addRoleCheckbox:checked').each(function(){ roles.push($(this).val()); });
 
-            let userDto = {
+            const userDto = {
                 name: $('#addUserName').val(),
                 age: parseInt($('#addUserAge').val()),
                 email: $('#addUserEmail').val(),
@@ -245,7 +244,7 @@
             };
 
             $.ajax({
-                url: `/api/admin/users`,
+                url: '/api/admin/users',
                 type: 'POST',
                 contentType: 'application/json',
                 data: JSON.stringify(userDto),
@@ -254,9 +253,8 @@
             });
         });
 
-
-        $('#usersTable').on('click', '.deleteBtn', function () {
-            let userId = $(this).data('id');
+        $('#usersTable').on('click', '.deleteBtn', function() {
+            const userId = $(this).data('id');
             if (!confirm('Удалить пользователя?')) return;
             $.ajax({
                 url: `/api/admin/users/${userId}`,
