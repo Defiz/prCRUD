@@ -41,14 +41,9 @@ public class UserService {
     @Transactional
     public void createUser(UserValidatorDto userDto) {
         User user = userValidatorMapper.toEntity(userDto);
-        Role userRole = roleRepository.findByRole("ROLE_USER");
-        user.setRoles(Set.of(userRole));
+        Role role = roleRepository.findByRole("ROLE_USER");
+        user.setRoles(Set.of(role));
         userRepository.save(user);
-    }
-
-    @Transactional
-    public void deleteUserById(Integer id) {
-        userRepository.deleteById(id);
     }
 
     @Transactional
@@ -60,5 +55,10 @@ public class UserService {
         userFromBase.setPassword(user.getPassword());
         userFromBase.setRoles(user.getRoles());
         userRepository.save(userFromBase);
+    }
+
+    @Transactional
+    public void deleteUserById(Integer id) {
+        userRepository.deleteById(id);
     }
 }

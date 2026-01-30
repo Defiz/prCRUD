@@ -26,7 +26,6 @@ public class AuthController {
         return "registration";
     }
 
-    @Transactional
     @PostMapping("/registration")
     public String performRegistration(@ModelAttribute("user") @Valid UserValidatorDto userDto, BindingResult bindingResult) {
         userValidator.validate(userDto, bindingResult);
