@@ -65,7 +65,9 @@ public class UserService implements UserDetailsService {
         userFromBase.setName(userDto.getName());
         userFromBase.setAge(userDto.getAge());
         userFromBase.setEmail(userDto.getEmail());
-        userFromBase.setPassword(userDto.getPassword());
+        if (userDto.getPassword() != null && userDto.getPassword().isBlank()) {
+            userFromBase.setPassword(userDto.getPassword());
+        }
         userFromBase.setRoles(userMapper.stringToRole(userDto.getRoles()));
         userRepository.save(userFromBase);
         return userMapper.toUserRequestDto(userFromBase);
