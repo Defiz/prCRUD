@@ -14,9 +14,9 @@ public class AuthRestController {
     private final RegistrationService registrationService;
 
     @PostMapping("/registration")
-    public ResponseEntity<UserRegistrationDto> register(@RequestBody UserRegistrationDto userDto) throws Exception {
-        UserRegistrationDto userRegister = registrationService.register(userDto);
-        return ResponseEntity.ok(userRegister);
+    public ResponseEntity<UserRegistrationDto> register(@RequestBody UserRegistrationDto userDto) {
+        registrationService.register(userDto);
+        return ResponseEntity.ok().build();
     }
 
 }

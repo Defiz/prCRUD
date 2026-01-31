@@ -5,6 +5,4 @@ import vlad.pr.projectCRUD.model.Role;
 
 public interface RoleRepository extends JpaRepository<Role, Integer> {
     Role findByRole(String roles);
-
-
 }

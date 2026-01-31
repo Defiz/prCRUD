@@ -1,11 +1,14 @@
 package vlad.pr.projectCRUD.service;
 
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import vlad.pr.projectCRUD.dto.UserListDto;
+import vlad.pr.projectCRUD.dto.UserProfileDto;
 import vlad.pr.projectCRUD.dto.UserRestDto;
 import vlad.pr.projectCRUD.mapper.UserListMapper;
+import vlad.pr.projectCRUD.mapper.UserProfileMapper;
 import vlad.pr.projectCRUD.mapper.UserRestMapper;
 import vlad.pr.projectCRUD.model.Role;
 import vlad.pr.projectCRUD.model.User;
@@ -13,6 +16,7 @@ import vlad.pr.projectCRUD.repository.RoleRepository;
 import vlad.pr.projectCRUD.repository.UserRepository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @AllArgsConstructor
@@ -24,6 +28,7 @@ public class RestUserService {
     private final RoleRepository roleRepository;
     private final UserListMapper userListMapper;
     private final UserRestMapper userRestMapper;
+    private final UserProfileMapper userProfileMapper;
 
     public List<UserListDto> getAllUsers() {
         return userListMapper.toDtoList(userRepository.findAll());
@@ -35,11 +40,14 @@ public class RestUserService {
 
     }
 
+    public UserProfileDto getUserByName(String name) {
+        User user = userRepository.findByName(name).orElseThrow(() -> new UsernameNotFoundException("User not found!"));
+        return userProfileMapper.toDto(user);
+    }
+
     @Transactional
     public UserRestDto createUser(UserRestDto userDto) {
         User user = userRestMapper.toEntity(userDto);
-        Role role = roleRepository.findByRole("ROLE_USER");
-        user.setRoles(Set.of(role));
         userRepository.save(user);
         return userRestMapper.toDto(user);
     }
