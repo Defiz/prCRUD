@@ -5,8 +5,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import vlad.pr.projectCRUD.dto.UserListDto;
-import vlad.pr.projectCRUD.dto.UserRestDto;
-import vlad.pr.projectCRUD.service.RestUserService;
+import vlad.pr.projectCRUD.dto.UserRequestDto;
+import vlad.pr.projectCRUD.service.UserService;
 
 import java.util.List;
 
@@ -15,33 +15,33 @@ import java.util.List;
 @RequestMapping("/api/admin/users")
 public class AdminRestController {
 
-    private final RestUserService restUserService;
+    private final UserService userService;
 
     @GetMapping
     public List<UserListDto> getAllUsers() {
-        return restUserService.getAllUsers();
+        return userService.getAllUsers();
     }
 
     @GetMapping("/{id}")
-    public UserRestDto getUser(@PathVariable Integer id) {
-        return restUserService.getUserById(id);
+    public UserRequestDto getUser(@PathVariable Integer id) {
+        return userService.getUserById(id);
     }
 
     @PostMapping
-    public ResponseEntity<UserRestDto> saveUser(@RequestBody UserRestDto userDto) {
-        UserRestDto userCreate = restUserService.createUser(userDto);
+    public ResponseEntity<UserRequestDto> saveUser(@RequestBody UserRequestDto userDto) {
+        UserRequestDto userCreate = userService.createUser(userDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(userCreate);
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<UserRestDto> editUser(@PathVariable Integer id, @RequestBody UserRestDto userDto) {
-        UserRestDto userUpdate = restUserService.updateUser(id, userDto);
+    public ResponseEntity<UserRequestDto> editUser(@PathVariable Integer id, @RequestBody UserRequestDto userDto) {
+        UserRequestDto userUpdate = userService.updateUser(id, userDto);
         return ResponseEntity.ok(userUpdate);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Integer id) {
-        restUserService.deleteUser(id);
+        userService.deleteUser(id);
         return ResponseEntity.noContent().build();
     }
 }

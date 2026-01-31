@@ -5,7 +5,7 @@ import lombok.Data;
 import java.util.Set;
 
 @Data
-public class UserRestDto {
+public class UserRequestDto {
     private Integer id;
     private String name;
     private int age;
